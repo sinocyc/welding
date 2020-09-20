@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsmri.welding.mapper.PermissionMapper">
+    <select id="selectUserPermissions" resultType="Permission">
+        SELECT p.id, p.name
+        FROM user AS u
+        LEFT JOIN user_role AS ur
+        ON u.id = ur.uid
+        LEFT JOIN role AS r
+        ON ur.rid = r.id
+        LEFT JOIN role_permission AS rp
+        ON r.id = rp.rid
+        LEFT JOIN permission AS p
+        ON rp.pid = p.id
+        WHERE u.id = #{id}
+    </select>
+</mapper>

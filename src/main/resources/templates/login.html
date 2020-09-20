@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>登录</title>
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/common.css">
+    <style>
+        body {
+            background-color: #EFEFEF;
+        }
+
+        #login-form-wrapper {
+            width: 400px;
+            padding: 40px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border: 1px solid #BFBFBF;
+            box-shadow: 2px 2px 3px #aaaaaa;
+        }
+    </style>
+</head>
+<body>
+<div id="login-form-wrapper">
+    <h1>用户登录</h1>
+    <form class="layui-form" lay-filter="login-form">
+        <div class="layui-form-item">
+            <input type="text" name="username" lay-verify="required" placeholder="请输入用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <input type="password" name="password" lay-verify="required" placeholder="请输入密码" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-form-item">
+            <button class="layui-btn layui-btn-fluid" lay-submit lay-filter="login-form-submit">登录</button>
+        </div>
+    </form>
+</div>
+<script src="/lib/layui/layui.all.js"></script>
+<script>
+    let form = layui.form;
+    let $ = layui.jquery;
+    form.on('submit(login-form-submit)', function (data) {
+        $.ajax({
+            type: 'POST',
+            url: '/login',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                console.log(res);
+                if (res.code === 0) {
+                    layer.msg('登录成功！', {icon: 1, time: 1000});
+                } else {
+                    layer.msg('登录失败，请重试。', {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('登录失败，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+</script>
+</body>
+</html>
