@@ -1,7 +1,6 @@
 package com.lsmri.welding.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lsmri.welding.common.JsonResult;
+import com.lsmri.welding.security.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,9 +12,11 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
-import javax.servlet.http.HttpServletResponse;
-import java.io.PrintWriter;
+import org.springframework.security.web.AuthenticationEntryPoint;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
 /**
  * @author Cui Yicheng
@@ -26,10 +27,25 @@ import java.io.PrintWriter;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private ObjectMapper objectMapper;
+    private AuthenticationEntryPoint authenticationEntryPoint;
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private AccessDeniedHandler accessDeniedHandler;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
+
+    @Autowired
+    private AuthenticationFailureHandler authenticationFailureHandler;
+
+    @Autowired
+    private LogoutSuccessHandler logoutSuccessHandler;
+
+    @Bean
+    @Override
+    public UserDetailsService userDetailsService() {
+        return new UserDetailsServiceImpl();
+    }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/lib/**", "/favicon.ico");
+        web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/lib/**", "/view/**", "/favicon.ico");
     }
 
     @Override
@@ -51,52 +67,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         http.authorizeRequests()
                 .anyRequest().authenticated()
-                .and()
-                .exceptionHandling()
-                .authenticationEntryPoint((request, response, exception) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    PrintWriter out = response.getWriter();
-                    out.write(objectMapper.writeValueAsString(JsonResult.fail("未登录")));
-                    out.flush();
-                    out.close();
-                })
-                .accessDeniedHandler((request, response, exception) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-                    PrintWriter out = response.getWriter();
-                    out.write(objectMapper.writeValueAsString(JsonResult.fail("权限不足")));
-                    out.flush();
-                    out.close();
-                })
-                .and()
-                .formLogin().permitAll()
-                .successHandler((request, response, authentication) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    PrintWriter out = response.getWriter();
-                    // TODO: authentication中是否包含敏感信息
-                    out.write(objectMapper.writeValueAsString(JsonResult.success("登录成功", authentication)));
-                    out.flush();
-                    out.close();
-                })
-                .failureHandler((request, response, exception) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                    PrintWriter out = response.getWriter();
-                    out.write(objectMapper.writeValueAsString(JsonResult.fail("登录失败")));
-                    out.flush();
-                    out.close();
-                })
-                .and()
-                .logout()
-                .permitAll()
-                .logoutSuccessHandler((request, response, authentication) -> {
-                    response.setContentType("application/json;charset=utf-8");
-                    PrintWriter out = response.getWriter();
-                    out.write(objectMapper.writeValueAsString(JsonResult.success("退出成功")));
-                    out.flush();
-                    out.close();
-                });
+                // 异常处理（未登录、权限拒绝等）
+                .and().exceptionHandling()
+                .authenticationEntryPoint(authenticationEntryPoint)
+                .accessDeniedHandler(accessDeniedHandler)
+                // 登入
+                .and().formLogin().permitAll()
+                .successHandler(authenticationSuccessHandler)
+                .failureHandler(authenticationFailureHandler)
+                // 登出
+                .and().logout().permitAll()
+                .logoutSuccessHandler(logoutSuccessHandler);
     }
 
 }

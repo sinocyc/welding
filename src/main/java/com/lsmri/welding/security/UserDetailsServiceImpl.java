@@ -1,4 +1,4 @@
-package com.lsmri.welding.service.impl;
+package com.lsmri.welding.security;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,7 +23,6 @@ import java.util.List;
  * @author Cui Yicheng
  * @date 2020-09-20
  */
-@Service
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
 
