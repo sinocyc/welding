@@ -1,7 +1,7 @@
-package com.lsmri.welding.security;
+package com.lsmri.welding.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lsmri.welding.common.JsonResult;
+import com.lsmri.welding.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -28,7 +28,7 @@ public class CustomizeAuthenticationEntryPoint implements AuthenticationEntryPoi
         response.setContentType("application/json;charset=utf-8");
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         PrintWriter out = response.getWriter();
-        out.write(objectMapper.writeValueAsString(JsonResult.fail("未登录")));
+        out.write(objectMapper.writeValueAsString(CommonResult.fail("未登录")));
         out.flush();
         out.close();
     }

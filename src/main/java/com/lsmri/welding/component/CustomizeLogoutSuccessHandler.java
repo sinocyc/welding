@@ -1,10 +1,10 @@
-package com.lsmri.welding.security;
+package com.lsmri.welding.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lsmri.welding.common.JsonResult;
+import com.lsmri.welding.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -18,17 +18,16 @@ import java.io.PrintWriter;
  * @date 2020-09-22
  */
 @Component
-public class CustomizeAuthenticationFailureHandler implements AuthenticationFailureHandler {
+public class CustomizeLogoutSuccessHandler implements LogoutSuccessHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         PrintWriter out = response.getWriter();
-        out.write(objectMapper.writeValueAsString(JsonResult.fail("登录失败")));
+        out.write(objectMapper.writeValueAsString(CommonResult.success("退出成功")));
         out.flush();
         out.close();
     }

@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author Cui Yicheng
  * @date 2020-09-20
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.lsmri.welding")
 @MapperScan("com.lsmri.welding.mapper")
 public class WeldingApplication {
 

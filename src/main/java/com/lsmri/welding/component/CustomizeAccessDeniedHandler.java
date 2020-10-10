@@ -1,10 +1,10 @@
-package com.lsmri.welding.security;
+package com.lsmri.welding.component;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.lsmri.welding.common.JsonResult;
+import com.lsmri.welding.common.CommonResult;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.ServletException;
@@ -18,17 +18,17 @@ import java.io.PrintWriter;
  * @date 2020-09-22
  */
 @Component
-public class CustomizeAuthenticationSuccessHandler implements AuthenticationSuccessHandler {
+public class CustomizeAccessDeniedHandler implements AccessDeniedHandler {
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException accessDeniedException) throws IOException, ServletException {
         response.setContentType("application/json;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         PrintWriter out = response.getWriter();
-        // TODO: authentication中是否包含敏感信息
-        out.write(objectMapper.writeValueAsString(JsonResult.success("登录成功", authentication)));
+        out.write(objectMapper.writeValueAsString(CommonResult.fail("权限不足")));
         out.flush();
         out.close();
     }

@@ -12,11 +12,11 @@ public class SecurityTest {
     @Test
     void test01() {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String pd = encoder.encode("123456");
+        String pd = encoder.encode("123");
         System.out.println("==========");
         System.out.println(pd);
         System.out.println(pd.length());
-        System.out.println(encoder.matches("123456", pd));
+        System.out.println(encoder.matches("123", pd));
     }
 
 }

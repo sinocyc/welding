@@ -1,6 +1,6 @@
 package com.lsmri.welding.config;
 
-import com.lsmri.welding.security.UserDetailsServiceImpl;
+import com.lsmri.welding.service.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,7 +44,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        return new UserDetailsServiceImpl();
+        return new UserServiceImpl();
     }
 
     @Bean
@@ -59,7 +59,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/css/**", "/img/**", "/js/**", "/lib/**", "/view/**", "/favicon.ico");
+        web.ignoring().antMatchers("/", "/css/**", "/img/**", "/js/**", "/lib/**", "/view/**", "/favicon.ico");
     }
 
     @Override
