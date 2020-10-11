@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    username: root
+    password: 123456
+    url: jdbc:mysql://localhost:3306/welding?useUnicode=true&characterEncoding=utf8&allowMultiQueries=true&zeroDateTimeBehavior=convertToNull&useSSL=false&serverTimezone=Asia/Shanghai
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      initial-size: 5
+      min-idle: 10
+      max-active: 20
+mybatis:
+  mapper-locations:
+    - classpath:com/**/dao/*.xml
+    - classpath*:com/**/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+secure:
+  ignored:
+    urls:
+      - /user/login
+      - /error
+jwt:
+  tokenHeader: Authorization # JWT存储的请求头
+  secret: welding-jwt-secret # JWT加解密使用的密钥
+  expiration: 604800 # JWT的超期限时间(60*60*24*7)
+  tokenHead: 'Bearer '  # JWT负载中拿到开头

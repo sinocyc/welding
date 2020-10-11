@@ -2,6 +2,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <modules>
+        <module>welding-auth</module>
+        <module>welding-portal</module>
+        <module>welding-mbg</module>
+        <module>welding-common</module>
+    </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -11,14 +17,20 @@
     <groupId>com.lsmri</groupId>
     <artifactId>welding</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <packaging>pom</packaging>
     <name>welding</name>
     <description>Luoyang Ship Material Research Institute Welding Application</description>
 
     <properties>
         <java.version>1.8</java.version>
-        <druid.version>1.1.24</druid.version>
+        <druid.version>1.1.22</druid.version>
         <mybatis-generator.version>1.4.0</mybatis-generator.version>
         <mybatis.version>2.1.3</mybatis.version>
+        <welding-mbg.version>0.0.1-SNAPSHOT</welding-mbg.version>
+        <welding-auth.version>0.0.1-SNAPSHOT</welding-auth.version>
+        <welding-common.version>0.0.1-SNAPSHOT</welding-common.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <hutool.version>5.4.3</hutool.version>
     </properties>
 
     <dependencies>
@@ -42,7 +54,7 @@
         </dependency>
         <dependency>
             <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
+            <artifactId>druid-spring-boot-starter</artifactId>
             <version>${druid.version}</version>
         </dependency>
         <dependency>
@@ -54,6 +66,11 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>${hutool.version}</version>
         </dependency>
         <!--测试-->
         <dependency>
@@ -73,6 +90,31 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.lsmri</groupId>
+                <artifactId>welding-mbg</artifactId>
+                <version>${welding-mbg.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lsmri</groupId>
+                <artifactId>welding-auth</artifactId>
+                <version>${welding-auth.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.lsmri</groupId>
+                <artifactId>welding-common</artifactId>
+                <version>${welding-common.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt</artifactId>
+                <version>${jjwt.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
         <plugins>
