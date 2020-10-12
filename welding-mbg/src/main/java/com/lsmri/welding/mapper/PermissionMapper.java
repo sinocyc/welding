@@ -2,9 +2,8 @@ package com.lsmri.welding.mapper;
 
 import com.lsmri.welding.model.Permission;
 import com.lsmri.welding.model.PermissionExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface PermissionMapper {
     long countByExample(PermissionExample example);

@@ -2,9 +2,8 @@ package com.lsmri.welding.mapper;
 
 import com.lsmri.welding.model.UserRoleRelation;
 import com.lsmri.welding.model.UserRoleRelationExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserRoleRelationMapper {
     long countByExample(UserRoleRelationExample example);

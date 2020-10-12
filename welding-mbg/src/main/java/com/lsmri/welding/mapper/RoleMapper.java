@@ -2,9 +2,8 @@ package com.lsmri.welding.mapper;
 
 import com.lsmri.welding.model.Role;
 import com.lsmri.welding.model.RoleExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
     long countByExample(RoleExample example);

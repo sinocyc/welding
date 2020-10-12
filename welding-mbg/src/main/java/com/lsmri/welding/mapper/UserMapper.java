@@ -2,9 +2,8 @@ package com.lsmri.welding.mapper;
 
 import com.lsmri.welding.model.User;
 import com.lsmri.welding.model.UserExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface UserMapper {
     long countByExample(UserExample example);

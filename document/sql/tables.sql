@@ -94,6 +94,37 @@ DEFAULT CHARACTER SET = utf8
 COMMENT = '角色与权限关联表';
 
 
+-- -----------------------------------------------------
+-- Table `welding`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `welding` ;
+
+CREATE TABLE IF NOT EXISTS `welding` (
+  `id` BIGINT NOT NULL AUTO_INCREMENT COMMENT '数据id',
+  `base_metal` VARCHAR(40) NOT NULL COMMENT '母材',
+  `weld_material` VARCHAR(40) NOT NULL COMMENT '焊材',
+  `thickness` DOUBLE(12,2) NOT NULL COMMENT '板厚',
+  `position` VARCHAR(40) NOT NULL COMMENT '焊接位置',
+  `type` VARCHAR(40) NOT NULL COMMENT '焊接形式',
+  `width` DOUBLE(12,2) NOT NULL COMMENT '焊缝宽度',
+  `gap` DOUBLE(12,2) NOT NULL COMMENT '根部间隙',
+  `angle` INT NOT NULL COMMENT '坡口角度',
+  `layer` INT NOT NULL COMMENT '层',
+  `path` INT NOT NULL COMMENT '道',
+  `wire_feed_speed` DOUBLE(12,2) NOT NULL COMMENT '送丝速度',
+  `voltage` DOUBLE(12,2) NOT NULL COMMENT '焊接电压',
+  `current` DOUBLE(12,2) NOT NULL COMMENT '焊接电流',
+  `speed` DOUBLE(12,2) NOT NULL COMMENT '焊接速度',
+  `frequency` INT NOT NULL COMMENT '摆焊频率',
+  `amplitude` INT NOT NULL COMMENT '摆幅',
+  `waitl` DOUBLE(12,2) NOT NULL COMMENT '停留时间（L）',
+  `waita` DOUBLE(12,2) NOT NULL COMMENT '停留时间（A）',
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COMMENT = '焊接数据表';
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

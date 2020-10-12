@@ -1,22 +1,25 @@
 package com.lsmri.welding.auth.util;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.DefaultClaims;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @author Cui Yicheng
  * @since 2020/10/10
  */
+@Slf4j
 public class JwtTokenUtil {
 
-    private static final String CLAIM_KEY_USERNAME = "sub";
-    private static final String CLAIM_KEY_CREATED = "created";
+    public static final String CLAIM_KEY_AUTHORITIES = "authorities";
 
     @Value("${jwt.secret}")
     private String secret;
@@ -31,15 +34,40 @@ public class JwtTokenUtil {
      * @return 生成的token
      */
     public String generateToken(UserDetails userDetails) {
-        Map<String, Object> claims = new HashMap<>();
-        claims.put(CLAIM_KEY_USERNAME, userDetails.getUsername());
-        claims.put(CLAIM_KEY_CREATED, new Date());
+        Claims claims = new DefaultClaims();
+        claims.setSubject(userDetails.getUsername());
+        Collection<? extends GrantedAuthority> authorities = userDetails.getAuthorities();
+        StringBuilder as = new StringBuilder();
+        for (GrantedAuthority authority : authorities) {
+            as.append(authority.getAuthority()).append(",");
+        }
+        if (as.length() > 0) {
+            as.deleteCharAt(as.length() - 1);
+        }
+        claims.put(CLAIM_KEY_AUTHORITIES, as.toString());
         return generateToken(claims);
     }
 
-    private String generateToken(Map<String, Object> claims) {
+    /**
+     * 从token中获取JWT中的负载
+     */
+    public Claims getClaimsFromToken(String token) {
+        Claims claims = null;
+        try {
+            claims = Jwts.parser()
+                    .setSigningKey(secret)
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (Exception e) {
+            log.info("JWT格式验证失败:{}", token);
+        }
+        return claims;
+    }
+
+    private String generateToken(Claims claims) {
         return Jwts.builder()
                 .setClaims(claims)
+                .setIssuedAt(new Date())
                 .setExpiration(generateExpirationDate())
                 .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();

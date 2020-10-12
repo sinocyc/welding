@@ -2,9 +2,8 @@ package com.lsmri.welding.mapper;
 
 import com.lsmri.welding.model.RolePermissionRelation;
 import com.lsmri.welding.model.RolePermissionRelationExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
+import org.apache.ibatis.annotations.Param;
 
 public interface RolePermissionRelationMapper {
     long countByExample(RolePermissionRelationExample example);
