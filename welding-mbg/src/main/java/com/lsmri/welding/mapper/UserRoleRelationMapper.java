@@ -1,30 +1,30 @@
 package com.lsmri.welding.mapper;
 
-import com.lsmri.welding.model.UserRoleRelation;
-import com.lsmri.welding.model.UserRoleRelationExample;
+import com.lsmri.welding.model.UserRoleRelationDO;
+import com.lsmri.welding.model.UserRoleRelationDOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface UserRoleRelationMapper {
-    long countByExample(UserRoleRelationExample example);
+    long countByExample(UserRoleRelationDOExample example);
 
-    int deleteByExample(UserRoleRelationExample example);
+    int deleteByExample(UserRoleRelationDOExample example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(UserRoleRelation record);
+    int insert(UserRoleRelationDO record);
 
-    int insertSelective(UserRoleRelation record);
+    int insertSelective(UserRoleRelationDO record);
 
-    List<UserRoleRelation> selectByExample(UserRoleRelationExample example);
+    List<UserRoleRelationDO> selectByExample(UserRoleRelationDOExample example);
 
-    UserRoleRelation selectByPrimaryKey(Long id);
+    UserRoleRelationDO selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") UserRoleRelation record, @Param("example") UserRoleRelationExample example);
+    int updateByExampleSelective(@Param("record") UserRoleRelationDO record, @Param("example") UserRoleRelationDOExample example);
 
-    int updateByExample(@Param("record") UserRoleRelation record, @Param("example") UserRoleRelationExample example);
+    int updateByExample(@Param("record") UserRoleRelationDO record, @Param("example") UserRoleRelationDOExample example);
 
-    int updateByPrimaryKeySelective(UserRoleRelation record);
+    int updateByPrimaryKeySelective(UserRoleRelationDO record);
 
-    int updateByPrimaryKey(UserRoleRelation record);
+    int updateByPrimaryKey(UserRoleRelationDO record);
 }

@@ -1,30 +1,30 @@
 package com.lsmri.welding.mapper;
 
-import com.lsmri.welding.model.RolePermissionRelation;
-import com.lsmri.welding.model.RolePermissionRelationExample;
+import com.lsmri.welding.model.RolePermissionRelationDO;
+import com.lsmri.welding.model.RolePermissionRelationDOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface RolePermissionRelationMapper {
-    long countByExample(RolePermissionRelationExample example);
+    long countByExample(RolePermissionRelationDOExample example);
 
-    int deleteByExample(RolePermissionRelationExample example);
+    int deleteByExample(RolePermissionRelationDOExample example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(RolePermissionRelation record);
+    int insert(RolePermissionRelationDO record);
 
-    int insertSelective(RolePermissionRelation record);
+    int insertSelective(RolePermissionRelationDO record);
 
-    List<RolePermissionRelation> selectByExample(RolePermissionRelationExample example);
+    List<RolePermissionRelationDO> selectByExample(RolePermissionRelationDOExample example);
 
-    RolePermissionRelation selectByPrimaryKey(Long id);
+    RolePermissionRelationDO selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") RolePermissionRelation record, @Param("example") RolePermissionRelationExample example);
+    int updateByExampleSelective(@Param("record") RolePermissionRelationDO record, @Param("example") RolePermissionRelationDOExample example);
 
-    int updateByExample(@Param("record") RolePermissionRelation record, @Param("example") RolePermissionRelationExample example);
+    int updateByExample(@Param("record") RolePermissionRelationDO record, @Param("example") RolePermissionRelationDOExample example);
 
-    int updateByPrimaryKeySelective(RolePermissionRelation record);
+    int updateByPrimaryKeySelective(RolePermissionRelationDO record);
 
-    int updateByPrimaryKey(RolePermissionRelation record);
+    int updateByPrimaryKey(RolePermissionRelationDO record);
 }

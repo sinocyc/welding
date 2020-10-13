@@ -3,7 +3,6 @@ package com.lsmri.welding.auth.config;
 import com.lsmri.welding.auth.component.CustomizeAccessDeniedHandler;
 import com.lsmri.welding.auth.component.CustomizeAuthenticationEntryPoint;
 import com.lsmri.welding.auth.component.JwtAuthenticationTokenFilter;
-import com.lsmri.welding.auth.service.impl.UserServiceImpl;
 import com.lsmri.welding.auth.util.JwtTokenUtil;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,7 +13,6 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -61,12 +59,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // 不使用session
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-    }
-
-    @Bean
-    @Override
-    public UserDetailsService userDetailsService() {
-        return new UserServiceImpl();
     }
 
     @Bean

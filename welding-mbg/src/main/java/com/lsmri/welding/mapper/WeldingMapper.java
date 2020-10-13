@@ -1,30 +1,30 @@
 package com.lsmri.welding.mapper;
 
-import com.lsmri.welding.model.Welding;
-import com.lsmri.welding.model.WeldingExample;
+import com.lsmri.welding.model.WeldingDO;
+import com.lsmri.welding.model.WeldingDOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface WeldingMapper {
-    long countByExample(WeldingExample example);
+    long countByExample(WeldingDOExample example);
 
-    int deleteByExample(WeldingExample example);
+    int deleteByExample(WeldingDOExample example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(Welding record);
+    int insert(WeldingDO record);
 
-    int insertSelective(Welding record);
+    int insertSelective(WeldingDO record);
 
-    List<Welding> selectByExample(WeldingExample example);
+    List<WeldingDO> selectByExample(WeldingDOExample example);
 
-    Welding selectByPrimaryKey(Long id);
+    WeldingDO selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") Welding record, @Param("example") WeldingExample example);
+    int updateByExampleSelective(@Param("record") WeldingDO record, @Param("example") WeldingDOExample example);
 
-    int updateByExample(@Param("record") Welding record, @Param("example") WeldingExample example);
+    int updateByExample(@Param("record") WeldingDO record, @Param("example") WeldingDOExample example);
 
-    int updateByPrimaryKeySelective(Welding record);
+    int updateByPrimaryKeySelective(WeldingDO record);
 
-    int updateByPrimaryKey(Welding record);
+    int updateByPrimaryKey(WeldingDO record);
 }

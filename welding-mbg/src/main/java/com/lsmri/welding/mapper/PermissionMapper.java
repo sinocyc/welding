@@ -1,30 +1,30 @@
 package com.lsmri.welding.mapper;
 
-import com.lsmri.welding.model.Permission;
-import com.lsmri.welding.model.PermissionExample;
+import com.lsmri.welding.model.PermissionDO;
+import com.lsmri.welding.model.PermissionDOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface PermissionMapper {
-    long countByExample(PermissionExample example);
+    long countByExample(PermissionDOExample example);
 
-    int deleteByExample(PermissionExample example);
+    int deleteByExample(PermissionDOExample example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(Permission record);
+    int insert(PermissionDO record);
 
-    int insertSelective(Permission record);
+    int insertSelective(PermissionDO record);
 
-    List<Permission> selectByExample(PermissionExample example);
+    List<PermissionDO> selectByExample(PermissionDOExample example);
 
-    Permission selectByPrimaryKey(Long id);
+    PermissionDO selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") Permission record, @Param("example") PermissionExample example);
+    int updateByExampleSelective(@Param("record") PermissionDO record, @Param("example") PermissionDOExample example);
 
-    int updateByExample(@Param("record") Permission record, @Param("example") PermissionExample example);
+    int updateByExample(@Param("record") PermissionDO record, @Param("example") PermissionDOExample example);
 
-    int updateByPrimaryKeySelective(Permission record);
+    int updateByPrimaryKeySelective(PermissionDO record);
 
-    int updateByPrimaryKey(Permission record);
+    int updateByPrimaryKey(PermissionDO record);
 }

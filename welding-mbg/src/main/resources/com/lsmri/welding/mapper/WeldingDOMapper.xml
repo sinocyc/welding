@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsmri.welding.mapper.WeldingMapper">
+  <resultMap id="BaseResultMap" type="com.lsmri.welding.model.WeldingDO">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="base_metal" jdbcType="VARCHAR" property="baseMetal" />
+    <result column="weld_material" jdbcType="VARCHAR" property="weldMaterial" />
+    <result column="thickness" jdbcType="DECIMAL" property="thickness" />
+    <result column="position" jdbcType="VARCHAR" property="position" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="width" jdbcType="DOUBLE" property="width" />
+    <result column="gap" jdbcType="DOUBLE" property="gap" />
+    <result column="angle" jdbcType="INTEGER" property="angle" />
+    <result column="layer" jdbcType="INTEGER" property="layer" />
+    <result column="path" jdbcType="INTEGER" property="path" />
+    <result column="wire_feed_speed" jdbcType="DOUBLE" property="wireFeedSpeed" />
+    <result column="voltage" jdbcType="DOUBLE" property="voltage" />
+    <result column="current" jdbcType="DOUBLE" property="current" />
+    <result column="speed" jdbcType="DOUBLE" property="speed" />
+    <result column="frequency" jdbcType="INTEGER" property="frequency" />
+    <result column="amplitude" jdbcType="INTEGER" property="amplitude" />
+    <result column="waitl" jdbcType="DOUBLE" property="waitl" />
+    <result column="waita" jdbcType="DOUBLE" property="waita" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, base_metal, weld_material, thickness, position, type, width, gap, angle, layer, 
+    path, wire_feed_speed, voltage, current, speed, frequency, amplitude, waitl, waita
+  </sql>
+  <select id="selectByExample" parameterType="com.lsmri.welding.model.WeldingDOExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from welding
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from welding
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from welding
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.lsmri.welding.model.WeldingDOExample">
+    delete from welding
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.lsmri.welding.model.WeldingDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into welding (base_metal, weld_material, thickness, 
+      position, type, width, 
+      gap, angle, layer, path, 
+      wire_feed_speed, voltage, current, 
+      speed, frequency, amplitude, 
+      waitl, waita)
+    values (#{baseMetal,jdbcType=VARCHAR}, #{weldMaterial,jdbcType=VARCHAR}, #{thickness,jdbcType=DECIMAL}, 
+      #{position,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{width,jdbcType=DOUBLE}, 
+      #{gap,jdbcType=DOUBLE}, #{angle,jdbcType=INTEGER}, #{layer,jdbcType=INTEGER}, #{path,jdbcType=INTEGER}, 
+      #{wireFeedSpeed,jdbcType=DOUBLE}, #{voltage,jdbcType=DOUBLE}, #{current,jdbcType=DOUBLE}, 
+      #{speed,jdbcType=DOUBLE}, #{frequency,jdbcType=INTEGER}, #{amplitude,jdbcType=INTEGER}, 
+      #{waitl,jdbcType=DOUBLE}, #{waita,jdbcType=DOUBLE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.lsmri.welding.model.WeldingDO">
+    <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into welding
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="baseMetal != null">
+        base_metal,
+      </if>
+      <if test="weldMaterial != null">
+        weld_material,
+      </if>
+      <if test="thickness != null">
+        thickness,
+      </if>
+      <if test="position != null">
+        position,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="width != null">
+        width,
+      </if>
+      <if test="gap != null">
+        gap,
+      </if>
+      <if test="angle != null">
+        angle,
+      </if>
+      <if test="layer != null">
+        layer,
+      </if>
+      <if test="path != null">
+        path,
+      </if>
+      <if test="wireFeedSpeed != null">
+        wire_feed_speed,
+      </if>
+      <if test="voltage != null">
+        voltage,
+      </if>
+      <if test="current != null">
+        current,
+      </if>
+      <if test="speed != null">
+        speed,
+      </if>
+      <if test="frequency != null">
+        frequency,
+      </if>
+      <if test="amplitude != null">
+        amplitude,
+      </if>
+      <if test="waitl != null">
+        waitl,
+      </if>
+      <if test="waita != null">
+        waita,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="baseMetal != null">
+        #{baseMetal,jdbcType=VARCHAR},
+      </if>
+      <if test="weldMaterial != null">
+        #{weldMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="thickness != null">
+        #{thickness,jdbcType=DECIMAL},
+      </if>
+      <if test="position != null">
+        #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null">
+        #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="gap != null">
+        #{gap,jdbcType=DOUBLE},
+      </if>
+      <if test="angle != null">
+        #{angle,jdbcType=INTEGER},
+      </if>
+      <if test="layer != null">
+        #{layer,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        #{path,jdbcType=INTEGER},
+      </if>
+      <if test="wireFeedSpeed != null">
+        #{wireFeedSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="voltage != null">
+        #{voltage,jdbcType=DOUBLE},
+      </if>
+      <if test="current != null">
+        #{current,jdbcType=DOUBLE},
+      </if>
+      <if test="speed != null">
+        #{speed,jdbcType=DOUBLE},
+      </if>
+      <if test="frequency != null">
+        #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="amplitude != null">
+        #{amplitude,jdbcType=INTEGER},
+      </if>
+      <if test="waitl != null">
+        #{waitl,jdbcType=DOUBLE},
+      </if>
+      <if test="waita != null">
+        #{waita,jdbcType=DOUBLE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.lsmri.welding.model.WeldingDOExample" resultType="java.lang.Long">
+    select count(*) from welding
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update welding
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.baseMetal != null">
+        base_metal = #{record.baseMetal,jdbcType=VARCHAR},
+      </if>
+      <if test="record.weldMaterial != null">
+        weld_material = #{record.weldMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.thickness != null">
+        thickness = #{record.thickness,jdbcType=DECIMAL},
+      </if>
+      <if test="record.position != null">
+        position = #{record.position,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.width != null">
+        width = #{record.width,jdbcType=DOUBLE},
+      </if>
+      <if test="record.gap != null">
+        gap = #{record.gap,jdbcType=DOUBLE},
+      </if>
+      <if test="record.angle != null">
+        angle = #{record.angle,jdbcType=INTEGER},
+      </if>
+      <if test="record.layer != null">
+        layer = #{record.layer,jdbcType=INTEGER},
+      </if>
+      <if test="record.path != null">
+        path = #{record.path,jdbcType=INTEGER},
+      </if>
+      <if test="record.wireFeedSpeed != null">
+        wire_feed_speed = #{record.wireFeedSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="record.voltage != null">
+        voltage = #{record.voltage,jdbcType=DOUBLE},
+      </if>
+      <if test="record.current != null">
+        current = #{record.current,jdbcType=DOUBLE},
+      </if>
+      <if test="record.speed != null">
+        speed = #{record.speed,jdbcType=DOUBLE},
+      </if>
+      <if test="record.frequency != null">
+        frequency = #{record.frequency,jdbcType=INTEGER},
+      </if>
+      <if test="record.amplitude != null">
+        amplitude = #{record.amplitude,jdbcType=INTEGER},
+      </if>
+      <if test="record.waitl != null">
+        waitl = #{record.waitl,jdbcType=DOUBLE},
+      </if>
+      <if test="record.waita != null">
+        waita = #{record.waita,jdbcType=DOUBLE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update welding
+    set id = #{record.id,jdbcType=BIGINT},
+      base_metal = #{record.baseMetal,jdbcType=VARCHAR},
+      weld_material = #{record.weldMaterial,jdbcType=VARCHAR},
+      thickness = #{record.thickness,jdbcType=DECIMAL},
+      position = #{record.position,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=VARCHAR},
+      width = #{record.width,jdbcType=DOUBLE},
+      gap = #{record.gap,jdbcType=DOUBLE},
+      angle = #{record.angle,jdbcType=INTEGER},
+      layer = #{record.layer,jdbcType=INTEGER},
+      path = #{record.path,jdbcType=INTEGER},
+      wire_feed_speed = #{record.wireFeedSpeed,jdbcType=DOUBLE},
+      voltage = #{record.voltage,jdbcType=DOUBLE},
+      current = #{record.current,jdbcType=DOUBLE},
+      speed = #{record.speed,jdbcType=DOUBLE},
+      frequency = #{record.frequency,jdbcType=INTEGER},
+      amplitude = #{record.amplitude,jdbcType=INTEGER},
+      waitl = #{record.waitl,jdbcType=DOUBLE},
+      waita = #{record.waita,jdbcType=DOUBLE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lsmri.welding.model.WeldingDO">
+    update welding
+    <set>
+      <if test="baseMetal != null">
+        base_metal = #{baseMetal,jdbcType=VARCHAR},
+      </if>
+      <if test="weldMaterial != null">
+        weld_material = #{weldMaterial,jdbcType=VARCHAR},
+      </if>
+      <if test="thickness != null">
+        thickness = #{thickness,jdbcType=DECIMAL},
+      </if>
+      <if test="position != null">
+        position = #{position,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="width != null">
+        width = #{width,jdbcType=DOUBLE},
+      </if>
+      <if test="gap != null">
+        gap = #{gap,jdbcType=DOUBLE},
+      </if>
+      <if test="angle != null">
+        angle = #{angle,jdbcType=INTEGER},
+      </if>
+      <if test="layer != null">
+        layer = #{layer,jdbcType=INTEGER},
+      </if>
+      <if test="path != null">
+        path = #{path,jdbcType=INTEGER},
+      </if>
+      <if test="wireFeedSpeed != null">
+        wire_feed_speed = #{wireFeedSpeed,jdbcType=DOUBLE},
+      </if>
+      <if test="voltage != null">
+        voltage = #{voltage,jdbcType=DOUBLE},
+      </if>
+      <if test="current != null">
+        current = #{current,jdbcType=DOUBLE},
+      </if>
+      <if test="speed != null">
+        speed = #{speed,jdbcType=DOUBLE},
+      </if>
+      <if test="frequency != null">
+        frequency = #{frequency,jdbcType=INTEGER},
+      </if>
+      <if test="amplitude != null">
+        amplitude = #{amplitude,jdbcType=INTEGER},
+      </if>
+      <if test="waitl != null">
+        waitl = #{waitl,jdbcType=DOUBLE},
+      </if>
+      <if test="waita != null">
+        waita = #{waita,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lsmri.welding.model.WeldingDO">
+    update welding
+    set base_metal = #{baseMetal,jdbcType=VARCHAR},
+      weld_material = #{weldMaterial,jdbcType=VARCHAR},
+      thickness = #{thickness,jdbcType=DECIMAL},
+      position = #{position,jdbcType=VARCHAR},
+      type = #{type,jdbcType=VARCHAR},
+      width = #{width,jdbcType=DOUBLE},
+      gap = #{gap,jdbcType=DOUBLE},
+      angle = #{angle,jdbcType=INTEGER},
+      layer = #{layer,jdbcType=INTEGER},
+      path = #{path,jdbcType=INTEGER},
+      wire_feed_speed = #{wireFeedSpeed,jdbcType=DOUBLE},
+      voltage = #{voltage,jdbcType=DOUBLE},
+      current = #{current,jdbcType=DOUBLE},
+      speed = #{speed,jdbcType=DOUBLE},
+      frequency = #{frequency,jdbcType=INTEGER},
+      amplitude = #{amplitude,jdbcType=INTEGER},
+      waitl = #{waitl,jdbcType=DOUBLE},
+      waita = #{waita,jdbcType=DOUBLE}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

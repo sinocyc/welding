@@ -1,4 +1,4 @@
-INSERT INTO `user` (`id`, `username`, `password`, `status`) VALUES (1, 'cyc', '$2a$10$XlayykvsWekesvYd6AXAXOFRJ7FYny03raqwylJwv2JGooBdF/VhO', 1);
+INSERT INTO `user` (`id`, `username`, `password`, `status`) VALUES (1, 'admin', '$2a$10$XlayykvsWekesvYd6AXAXOFRJ7FYny03raqwylJwv2JGooBdF/VhO', 1);
 
 INSERT INTO `role` (`id`, `name`, `description`) VALUES (1, 'admin', '管理员');
 

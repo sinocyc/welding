@@ -1,30 +1,30 @@
 package com.lsmri.welding.mapper;
 
-import com.lsmri.welding.model.Role;
-import com.lsmri.welding.model.RoleExample;
+import com.lsmri.welding.model.RoleDO;
+import com.lsmri.welding.model.RoleDOExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 public interface RoleMapper {
-    long countByExample(RoleExample example);
+    long countByExample(RoleDOExample example);
 
-    int deleteByExample(RoleExample example);
+    int deleteByExample(RoleDOExample example);
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(Role record);
+    int insert(RoleDO record);
 
-    int insertSelective(Role record);
+    int insertSelective(RoleDO record);
 
-    List<Role> selectByExample(RoleExample example);
+    List<RoleDO> selectByExample(RoleDOExample example);
 
-    Role selectByPrimaryKey(Long id);
+    RoleDO selectByPrimaryKey(Long id);
 
-    int updateByExampleSelective(@Param("record") Role record, @Param("example") RoleExample example);
+    int updateByExampleSelective(@Param("record") RoleDO record, @Param("example") RoleDOExample example);
 
-    int updateByExample(@Param("record") Role record, @Param("example") RoleExample example);
+    int updateByExample(@Param("record") RoleDO record, @Param("example") RoleDOExample example);
 
-    int updateByPrimaryKeySelective(Role record);
+    int updateByPrimaryKeySelective(RoleDO record);
 
-    int updateByPrimaryKey(Role record);
+    int updateByPrimaryKey(RoleDO record);
 }

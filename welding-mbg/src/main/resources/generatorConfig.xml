@@ -15,6 +15,16 @@
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin"/>
         <!--生成mapper.xml时覆盖原文件-->
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
+        <!--修改SqlMapper名称-->
+        <plugin type="com.lsmri.welding.mbg.plugin.RenameSqlMapperPlugin">
+            <property name="searchString" value="DOMapper$"/>
+            <property name="replaceString" value="Mapper"/>
+        </plugin>
+        <!--修改JavaClient名称-->
+        <plugin type="com.lsmri.welding.mbg.plugin.RenameJavaClientPlugin">
+            <property name="searchString" value="DOMapper$"/>
+            <property name="replaceString" value="Mapper"/>
+        </plugin>
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
@@ -37,6 +47,7 @@
         <!--生成全部表tableName设为%-->
         <table tableName="%">
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
+            <domainObjectRenamingRule searchString="$" replaceString="DO"/>
         </table>
     </context>
 </generatorConfiguration>
