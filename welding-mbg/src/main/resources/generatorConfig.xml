@@ -17,8 +17,8 @@
         <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
         <!--修改SqlMapper名称-->
         <plugin type="com.lsmri.welding.mbg.plugin.RenameSqlMapperPlugin">
-            <property name="searchString" value="DOMapper$"/>
-            <property name="replaceString" value="Mapper"/>
+            <property name="searchString" value="DOMapper.xml$"/>
+            <property name="replaceString" value="Mapper.xml"/>
         </plugin>
         <!--修改JavaClient名称-->
         <plugin type="com.lsmri.welding.mbg.plugin.RenameJavaClientPlugin">
