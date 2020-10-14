@@ -9,7 +9,7 @@ public class WeldingDO implements Serializable {
 
     private String weldMaterial;
 
-    private Long thickness;
+    private Double thickness;
 
     private String position;
 
@@ -35,7 +35,7 @@ public class WeldingDO implements Serializable {
 
     private Integer frequency;
 
-    private Integer amplitude;
+    private Double amplitude;
 
     private Double waitl;
 
@@ -67,11 +67,11 @@ public class WeldingDO implements Serializable {
         this.weldMaterial = weldMaterial;
     }
 
-    public Long getThickness() {
+    public Double getThickness() {
         return thickness;
     }
 
-    public void setThickness(Long thickness) {
+    public void setThickness(Double thickness) {
         this.thickness = thickness;
     }
 
@@ -171,11 +171,11 @@ public class WeldingDO implements Serializable {
         this.frequency = frequency;
     }
 
-    public Integer getAmplitude() {
+    public Double getAmplitude() {
         return amplitude;
     }
 
-    public void setAmplitude(Integer amplitude) {
+    public void setAmplitude(Double amplitude) {
         this.amplitude = amplitude;
     }
 

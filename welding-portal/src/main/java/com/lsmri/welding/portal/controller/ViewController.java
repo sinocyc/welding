@@ -16,11 +16,4 @@ public class ViewController {
         return "forward:/view/index.html";
     }
 
-    // TODO(Yicheng): delete
-    @RequestMapping("/test")
-    @ResponseBody
-    public String test() {
-        return "test";
-    }
-
 }

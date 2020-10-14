@@ -28,6 +28,7 @@ secure:
       - /lib/**
       - /view/**
       - /*.ico
+      - /** # TODO(Yicheng): 删除测试
 
 jwt:
   tokenHeader: Authorization # JWT存储的请求头

@@ -314,52 +314,52 @@ public class WeldingDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andThicknessEqualTo(Long value) {
+        public Criteria andThicknessEqualTo(Double value) {
             addCriterion("thickness =", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessNotEqualTo(Long value) {
+        public Criteria andThicknessNotEqualTo(Double value) {
             addCriterion("thickness <>", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessGreaterThan(Long value) {
+        public Criteria andThicknessGreaterThan(Double value) {
             addCriterion("thickness >", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessGreaterThanOrEqualTo(Long value) {
+        public Criteria andThicknessGreaterThanOrEqualTo(Double value) {
             addCriterion("thickness >=", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessLessThan(Long value) {
+        public Criteria andThicknessLessThan(Double value) {
             addCriterion("thickness <", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessLessThanOrEqualTo(Long value) {
+        public Criteria andThicknessLessThanOrEqualTo(Double value) {
             addCriterion("thickness <=", value, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessIn(List<Long> values) {
+        public Criteria andThicknessIn(List<Double> values) {
             addCriterion("thickness in", values, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessNotIn(List<Long> values) {
+        public Criteria andThicknessNotIn(List<Double> values) {
             addCriterion("thickness not in", values, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessBetween(Long value1, Long value2) {
+        public Criteria andThicknessBetween(Double value1, Double value2) {
             addCriterion("thickness between", value1, value2, "thickness");
             return (Criteria) this;
         }
 
-        public Criteria andThicknessNotBetween(Long value1, Long value2) {
+        public Criteria andThicknessNotBetween(Double value1, Double value2) {
             addCriterion("thickness not between", value1, value2, "thickness");
             return (Criteria) this;
         }
@@ -1114,52 +1114,52 @@ public class WeldingDOExample {
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeEqualTo(Integer value) {
+        public Criteria andAmplitudeEqualTo(Double value) {
             addCriterion("amplitude =", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeNotEqualTo(Integer value) {
+        public Criteria andAmplitudeNotEqualTo(Double value) {
             addCriterion("amplitude <>", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeGreaterThan(Integer value) {
+        public Criteria andAmplitudeGreaterThan(Double value) {
             addCriterion("amplitude >", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeGreaterThanOrEqualTo(Integer value) {
+        public Criteria andAmplitudeGreaterThanOrEqualTo(Double value) {
             addCriterion("amplitude >=", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeLessThan(Integer value) {
+        public Criteria andAmplitudeLessThan(Double value) {
             addCriterion("amplitude <", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeLessThanOrEqualTo(Integer value) {
+        public Criteria andAmplitudeLessThanOrEqualTo(Double value) {
             addCriterion("amplitude <=", value, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeIn(List<Integer> values) {
+        public Criteria andAmplitudeIn(List<Double> values) {
             addCriterion("amplitude in", values, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeNotIn(List<Integer> values) {
+        public Criteria andAmplitudeNotIn(List<Double> values) {
             addCriterion("amplitude not in", values, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeBetween(Integer value1, Integer value2) {
+        public Criteria andAmplitudeBetween(Double value1, Double value2) {
             addCriterion("amplitude between", value1, value2, "amplitude");
             return (Criteria) this;
         }
 
-        public Criteria andAmplitudeNotBetween(Integer value1, Integer value2) {
+        public Criteria andAmplitudeNotBetween(Double value1, Double value2) {
             addCriterion("amplitude not between", value1, value2, "amplitude");
             return (Criteria) this;
         }

@@ -9,7 +9,7 @@ public class UserDO implements Serializable {
 
     private String password;
 
-    private Byte status;
+    private Integer status;
 
     private static final long serialVersionUID = 1L;
 
@@ -37,11 +37,11 @@ public class UserDO implements Serializable {
         this.password = password;
     }
 
-    public Byte getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(Byte status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

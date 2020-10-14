@@ -5,7 +5,7 @@
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="base_metal" jdbcType="VARCHAR" property="baseMetal" />
     <result column="weld_material" jdbcType="VARCHAR" property="weldMaterial" />
-    <result column="thickness" jdbcType="DECIMAL" property="thickness" />
+    <result column="thickness" jdbcType="DOUBLE" property="thickness" />
     <result column="position" jdbcType="VARCHAR" property="position" />
     <result column="type" jdbcType="VARCHAR" property="type" />
     <result column="width" jdbcType="DOUBLE" property="width" />
@@ -18,7 +18,7 @@
     <result column="current" jdbcType="DOUBLE" property="current" />
     <result column="speed" jdbcType="DOUBLE" property="speed" />
     <result column="frequency" jdbcType="INTEGER" property="frequency" />
-    <result column="amplitude" jdbcType="INTEGER" property="amplitude" />
+    <result column="amplitude" jdbcType="DOUBLE" property="amplitude" />
     <result column="waitl" jdbcType="DOUBLE" property="waitl" />
     <result column="waita" jdbcType="DOUBLE" property="waita" />
   </resultMap>
@@ -124,11 +124,11 @@
       wire_feed_speed, voltage, current, 
       speed, frequency, amplitude, 
       waitl, waita)
-    values (#{baseMetal,jdbcType=VARCHAR}, #{weldMaterial,jdbcType=VARCHAR}, #{thickness,jdbcType=DECIMAL}, 
+    values (#{baseMetal,jdbcType=VARCHAR}, #{weldMaterial,jdbcType=VARCHAR}, #{thickness,jdbcType=DOUBLE}, 
       #{position,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{width,jdbcType=DOUBLE}, 
       #{gap,jdbcType=DOUBLE}, #{angle,jdbcType=INTEGER}, #{layer,jdbcType=INTEGER}, #{path,jdbcType=INTEGER}, 
       #{wireFeedSpeed,jdbcType=DOUBLE}, #{voltage,jdbcType=DOUBLE}, #{current,jdbcType=DOUBLE}, 
-      #{speed,jdbcType=DOUBLE}, #{frequency,jdbcType=INTEGER}, #{amplitude,jdbcType=INTEGER}, 
+      #{speed,jdbcType=DOUBLE}, #{frequency,jdbcType=INTEGER}, #{amplitude,jdbcType=DOUBLE}, 
       #{waitl,jdbcType=DOUBLE}, #{waita,jdbcType=DOUBLE})
   </insert>
   <insert id="insertSelective" parameterType="com.lsmri.welding.model.WeldingDO">
@@ -200,7 +200,7 @@
         #{weldMaterial,jdbcType=VARCHAR},
       </if>
       <if test="thickness != null">
-        #{thickness,jdbcType=DECIMAL},
+        #{thickness,jdbcType=DOUBLE},
       </if>
       <if test="position != null">
         #{position,jdbcType=VARCHAR},
@@ -239,7 +239,7 @@
         #{frequency,jdbcType=INTEGER},
       </if>
       <if test="amplitude != null">
-        #{amplitude,jdbcType=INTEGER},
+        #{amplitude,jdbcType=DOUBLE},
       </if>
       <if test="waitl != null">
         #{waitl,jdbcType=DOUBLE},
@@ -268,7 +268,7 @@
         weld_material = #{record.weldMaterial,jdbcType=VARCHAR},
       </if>
       <if test="record.thickness != null">
-        thickness = #{record.thickness,jdbcType=DECIMAL},
+        thickness = #{record.thickness,jdbcType=DOUBLE},
       </if>
       <if test="record.position != null">
         position = #{record.position,jdbcType=VARCHAR},
@@ -307,7 +307,7 @@
         frequency = #{record.frequency,jdbcType=INTEGER},
       </if>
       <if test="record.amplitude != null">
-        amplitude = #{record.amplitude,jdbcType=INTEGER},
+        amplitude = #{record.amplitude,jdbcType=DOUBLE},
       </if>
       <if test="record.waitl != null">
         waitl = #{record.waitl,jdbcType=DOUBLE},
@@ -325,7 +325,7 @@
     set id = #{record.id,jdbcType=BIGINT},
       base_metal = #{record.baseMetal,jdbcType=VARCHAR},
       weld_material = #{record.weldMaterial,jdbcType=VARCHAR},
-      thickness = #{record.thickness,jdbcType=DECIMAL},
+      thickness = #{record.thickness,jdbcType=DOUBLE},
       position = #{record.position,jdbcType=VARCHAR},
       type = #{record.type,jdbcType=VARCHAR},
       width = #{record.width,jdbcType=DOUBLE},
@@ -338,7 +338,7 @@
       current = #{record.current,jdbcType=DOUBLE},
       speed = #{record.speed,jdbcType=DOUBLE},
       frequency = #{record.frequency,jdbcType=INTEGER},
-      amplitude = #{record.amplitude,jdbcType=INTEGER},
+      amplitude = #{record.amplitude,jdbcType=DOUBLE},
       waitl = #{record.waitl,jdbcType=DOUBLE},
       waita = #{record.waita,jdbcType=DOUBLE}
     <if test="_parameter != null">
@@ -355,7 +355,7 @@
         weld_material = #{weldMaterial,jdbcType=VARCHAR},
       </if>
       <if test="thickness != null">
-        thickness = #{thickness,jdbcType=DECIMAL},
+        thickness = #{thickness,jdbcType=DOUBLE},
       </if>
       <if test="position != null">
         position = #{position,jdbcType=VARCHAR},
@@ -394,7 +394,7 @@
         frequency = #{frequency,jdbcType=INTEGER},
       </if>
       <if test="amplitude != null">
-        amplitude = #{amplitude,jdbcType=INTEGER},
+        amplitude = #{amplitude,jdbcType=DOUBLE},
       </if>
       <if test="waitl != null">
         waitl = #{waitl,jdbcType=DOUBLE},
@@ -409,7 +409,7 @@
     update welding
     set base_metal = #{baseMetal,jdbcType=VARCHAR},
       weld_material = #{weldMaterial,jdbcType=VARCHAR},
-      thickness = #{thickness,jdbcType=DECIMAL},
+      thickness = #{thickness,jdbcType=DOUBLE},
       position = #{position,jdbcType=VARCHAR},
       type = #{type,jdbcType=VARCHAR},
       width = #{width,jdbcType=DOUBLE},
@@ -422,7 +422,7 @@
       current = #{current,jdbcType=DOUBLE},
       speed = #{speed,jdbcType=DOUBLE},
       frequency = #{frequency,jdbcType=INTEGER},
-      amplitude = #{amplitude,jdbcType=INTEGER},
+      amplitude = #{amplitude,jdbcType=DOUBLE},
       waitl = #{waitl,jdbcType=DOUBLE},
       waita = #{waita,jdbcType=DOUBLE}
     where id = #{id,jdbcType=BIGINT}
