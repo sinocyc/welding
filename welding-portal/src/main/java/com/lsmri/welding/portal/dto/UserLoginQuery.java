@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class UserLoginParam {
+public class UserLoginQuery {
 
     @NotEmpty
     private String username;

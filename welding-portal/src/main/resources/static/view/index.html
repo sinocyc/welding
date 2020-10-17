@@ -1,13 +1,425 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>首页</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Welding管理后台</title>
+    <!--    TODO: cyc 绝对路径-->
+    <link rel="stylesheet" href="../lib/layui/css/layui.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .layui-body {
+            overflow: auto;
+        }
+
+        .layui-fluid {
+            padding: 15px;
+            min-width: 1000px;
+        }
+
+        #welding-form-wrapper {
+            padding: 15px 15px 0 15px;
+        }
+
+        #welding-form .form-button-wrapper {
+            text-align: center;
+        }
+
+        #welding-form .layui-form-label {
+            width: 110px;
+            padding-left: 8px;
+            padding-right: 8px;
+        }
+
+        #welding-form .layui-input-inline {
+            width: 150px;
+        }
+
+        #filter-welding-form-wrapper {
+            border: 1px solid #e6e6e6;
+            padding: 5px 5px 0 5px;
+        }
+
+        #filter-welding-form .layui-form-item {
+            margin-bottom: 0;
+        }
+
+        #filter-welding-form .layui-inline {
+            line-height: normal;
+        }
+
+        #filter-welding-form .layui-form-label {
+            width: 100px;
+            height: 32px;
+            line-height: 32px;
+            padding: 0 8px;
+            font-size: 13px;
+        }
+
+        #filter-welding-form .layui-input-inline {
+            width: 140px;
+        }
+
+        #filter-welding-form .layui-input {
+            height: 32px;
+        }
+
+        #filter-welding-form .form-button-wrapper {
+            text-align: center;
+            border-top: 1px solid #e6e6e6;
+            padding-top: 5px;
+        }
+    </style>
 </head>
-<body>
-<div>
-    <h1>登录成功，欢迎！</h1>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">Welding</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-shrink-right"></i>
+                </a>
+            </li>
+            <li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;">
+                    <i class="layui-icon layui-icon-refresh-3"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退了</a></li>
+        </ul>
+    </div>
+
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a class="" href="javascript:;">数据</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">数据管理</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="javascript:;">用户</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;">用户管理</a></dd>
+                        <dd><a href="javascript:;">角色管理</a></dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="layui-fluid">
+            <div class="layui-row layui-col-space15">
+                <div class="layui-col-md12">
+                    <div class="layui-card">
+                        <div class="layui-card-body">
+                            <div id="filter-welding-form-wrapper">
+                                <form id="filter-welding-form" lay-filter="filter-welding-form" class="layui-form-pane">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">焊接位置</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="position" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">钢板厚度</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="thickness" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">焊缝宽度</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="width" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">根部间隙</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="gap" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">坡口角度</label>
+                                            <div class="layui-input-inline">
+                                                <input type="number" name="angle" autocomplete="off"
+                                                       class="layui-input">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="layui-form-item form-button-wrapper">
+                                        <div class="layui-inline">
+                                            <button class="layui-btn layui-btn-sm" lay-submit
+                                                    lay-filter="submit-filter-welding">计算参考数据
+                                            </button>
+                                            <button type="reset" class="layui-btn layui-btn-sm layui-btn-primary">重置条件
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <table id="welding-table" lay-filter="welding-table"></table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
-<script src="/js/common.js"></script>
+<div id="welding-form-wrapper" style="display: none;">
+    <form id="welding-form" class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">母材</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="baseMetal" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊材</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="weldMaterial" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">板厚</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="thickness" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接位置</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="position" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接形式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊缝宽度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="width" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">根部间隙</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="gap" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">坡口角度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="angle" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">层</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="layer" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">道</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="path" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">送丝速度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="wireFeedSpeed" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接电压</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="voltage" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接电流</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="current" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接速度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="speed" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">摆焊频率</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="frequency" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">摆幅</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="amplitude" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">停留时间(L)</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="waitl" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">停留时间(A)</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="waita" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item form-button-wrapper">
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="submit-welding">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script type="text/html" id="add-welding-btn-toolbar">
+    <button type="button" lay-event="add-welding" class="layui-btn layui-btn-sm">
+        <i class="layui-icon">&#xe608;</i> 添加数据
+    </button>
+</script>
+<!--    TODO: cyc 绝对路径-->
+<script src="../lib/layui/layui.all.js"></script>
+<!--<script src="/js/common.js"></script>-->
+<script>
+    //JavaScript代码区域
+    let $ = layui.$;
+    let form = layui.form;
+    let table = layui.table;
+
+    // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
+    let weldingFormLayerIdx;
+
+    table.on('toolbar(welding-table)', function (obj) {
+        if (obj.event === 'add-welding') {
+            weldingFormLayerIdx = layer.open({
+                type: 1,
+                title: '新增数据',
+                content: $('#welding-form-wrapper'),
+                area: '880px',
+                end: function () {
+                    $('#welding-form')[0].reset();
+                    form.render();
+                }
+            });
+        }
+    });
+
+    form.on('submit(submit-welding)', function (data) {
+        $.ajax({
+            type: 'POST',
+            url: '/welding',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                if (res.code === 200) {
+                    layer.msg('新增数据成功。', {icon: 1, time: 1000});
+                    layer.close(weldingFormLayerIdx);
+                } else {
+                    layer.msg('新增数据失败，请重试。', {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('新增数据请求出错，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+
+    table.render({
+        elem: '#welding-table',
+        url: '/welding',
+        method: 'get',
+        // where: {},
+        // headers: {},
+        request: {
+            pageName: 'pageNum',
+            limitName: 'pageSize'
+        },
+        response: {
+            statusCode: 200,
+        },
+        parseData: function (res) {
+            return {
+                code: res.code,
+                msg: res.message,
+                count: res.data.total,
+                data: res.data.list
+            };
+        },
+        toolbar: '#add-welding-btn-toolbar',
+        page: {
+            limits: [10, 20, 50, 100]
+        },
+        cellMinWidth: 100,
+        cols: [[
+            {field: 'baseMetal', title: '母材', hide: true},
+            {field: 'baseMetal', title: '焊材', hide: true},
+            {field: 'thickness', title: '板厚', hide: true},
+            {field: 'position', title: '焊接位置', hide: true},
+            {field: 'type', title: '焊接形式', hide: true},
+            {field: 'width', title: '焊缝宽度', hide: true},
+            {field: 'gap', title: '根部间隙', hide: true},
+            {field: 'angle', title: '坡口角度', hide: true},
+            {field: 'layer', title: '层'},
+            {field: 'path', title: '道'},
+            {field: 'wireFeedSpeed', title: '送丝速度'},
+            {field: 'voltage', title: '焊接电压'},
+            {field: 'current', title: '焊接电流', hide: true},
+            {field: 'speed', title: '焊接速度'},
+            {field: 'frequency', title: '摆焊频率'},
+            {field: 'amplitude', title: '摆幅'},
+            {field: 'waitl', title: '停留时间(L)'},
+            {field: 'waita', title: '停留时间(A)'}
+        ]]
+    });
+
+</script>
 </body>
 </html>

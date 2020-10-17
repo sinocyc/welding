@@ -1,7 +1,7 @@
 package com.lsmri.welding.portal.controller;
 
 import com.lsmri.welding.common.api.CommonResult;
-import com.lsmri.welding.portal.dto.UserLoginParam;
+import com.lsmri.welding.portal.dto.UserLoginQuery;
 import com.lsmri.welding.portal.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -35,8 +35,8 @@ public class UserController {
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult login(@Validated @RequestBody UserLoginParam userLoginParam) {
-        String token = userService.login(userLoginParam.getUsername(), userLoginParam.getPassword());
+    public CommonResult login(@Validated @RequestBody UserLoginQuery userLoginQuery) {
+        String token = userService.login(userLoginQuery.getUsername(), userLoginQuery.getPassword());
         if (token == null) {
             return CommonResult.validateFailed("用户名或密码错误");
         }

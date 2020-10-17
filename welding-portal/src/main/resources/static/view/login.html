@@ -52,14 +52,14 @@
             data: data.field,
             cache: false,
             success: function (res) {
-                if (res.code === 0) {
+                if (res.code === 200) {
                     layer.msg('登录成功！', {icon: 1, time: 1000});
                 } else {
                     layer.msg('登录失败，请重试。', {icon: 5, time: 1000});
                 }
             },
             error: function () {
-                layer.msg('登录失败，请重试。', {icon: 5, time: 1000});
+                layer.msg('登录请求出错，请重试。', {icon: 5, time: 1000});
             }
         });
         return false;
