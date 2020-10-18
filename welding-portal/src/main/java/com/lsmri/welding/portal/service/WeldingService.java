@@ -1,6 +1,8 @@
 package com.lsmri.welding.portal.service;
 
 import com.lsmri.welding.model.WeldingDO;
+import com.lsmri.welding.portal.dto.AddWeldingQuery;
+import com.lsmri.welding.portal.dto.ListWeldingQuery;
 
 import java.util.List;
 
@@ -10,8 +12,11 @@ import java.util.List;
  */
 public interface WeldingService {
 
-    int save(WeldingDO weldingDO);
+    int save(AddWeldingQuery addWeldingQuery);
 
-    List<WeldingDO> list(Integer pageNum, Integer pageSize);
+    List<WeldingDO> list(ListWeldingQuery listWeldingQuery, Integer pageNum, Integer pageSize);
 
+    int update(WeldingDO weldingDO);
+
+    int delete(Long id);
 }

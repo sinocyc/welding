@@ -4,17 +4,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>Welding管理后台</title>
-    <!--    TODO: cyc 绝对路径-->
-    <link rel="stylesheet" href="../lib/layui/css/layui.css">
-    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="/lib/layui/css/layui.css">
+    <link rel="stylesheet" href="/css/common.css">
     <style>
         .layui-body {
-            overflow: auto;
+            bottom: 0 !important;
+            margin: 15px;
         }
 
         .layui-fluid {
-            padding: 15px;
-            min-width: 1000px;
+            padding: 0;
         }
 
         #welding-form-wrapper {
@@ -68,6 +67,10 @@
             text-align: center;
             border-top: 1px solid #e6e6e6;
             padding-top: 5px;
+        }
+
+        .layui-body .layui-table-cell {
+            padding: 0 10px;
         }
     </style>
 </head>
@@ -132,39 +135,47 @@
                     <div class="layui-card">
                         <div class="layui-card-body">
                             <div id="filter-welding-form-wrapper">
-                                <form id="filter-welding-form" lay-filter="filter-welding-form" class="layui-form-pane">
+                                <form id="filter-welding-form" lay-filter="filter-welding-form"
+                                      class="layui-form layui-form-pane"
+                                      action="">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
                                             <label class="layui-form-label">焊接位置</label>
                                             <div class="layui-input-inline">
-                                                <input type="text" name="position" autocomplete="off"
+                                                <input type="text" name="position" lay-verify="string40"
+                                                       autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">钢板厚度</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="thickness" autocomplete="off"
+                                                <input type="number" name="thickness" lay-verify="decimal2"
+                                                       autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">焊缝宽度</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="width" autocomplete="off"
+                                                <input type="number" name="width" lay-verify="decimal2"
+                                                       autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">根部间隙</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="gap" autocomplete="off" class="layui-input">
+                                                <input type="number" name="gap" lay-verify="decimal2"
+                                                       autocomplete="off"
+                                                       class="layui-input">
                                             </div>
                                         </div>
                                         <div class="layui-inline">
                                             <label class="layui-form-label">坡口角度</label>
                                             <div class="layui-input-inline">
-                                                <input type="number" name="angle" autocomplete="off"
+                                                <input type="number" name="angle" lay-verify="integer"
+                                                       autocomplete="off"
                                                        class="layui-input">
                                             </div>
                                         </div>
@@ -189,24 +200,27 @@
     </div>
 </div>
 <div id="welding-form-wrapper" style="display: none;">
-    <form id="welding-form" class="layui-form layui-form-pane" action="">
+    <form id="welding-form" lay-filter="welding-form" class="layui-form layui-form-pane" action="">
         <div class="layui-form-item">
             <div class="layui-inline">
                 <label class="layui-form-label">母材</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="baseMetal" autocomplete="off" class="layui-input">
+                    <input type="text" name="baseMetal" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">焊材</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="weldMaterial" autocomplete="off" class="layui-input">
+                    <input type="text" name="weldMaterial" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">板厚</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="thickness" autocomplete="off" class="layui-input">
+                    <input type="number" name="thickness" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -214,19 +228,22 @@
             <div class="layui-inline">
                 <label class="layui-form-label">焊接位置</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="position" autocomplete="off" class="layui-input">
+                    <input type="text" name="position" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">焊接形式</label>
                 <div class="layui-input-inline">
-                    <input type="text" name="type" autocomplete="off" class="layui-input">
+                    <input type="text" name="type" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">焊缝宽度</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="width" autocomplete="off" class="layui-input">
+                    <input type="number" name="width" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -234,19 +251,21 @@
             <div class="layui-inline">
                 <label class="layui-form-label">根部间隙</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="gap" autocomplete="off" class="layui-input">
+                    <input type="number" name="gap" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">坡口角度</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="angle" autocomplete="off" class="layui-input">
+                    <input type="number" name="angle" lay-verify="required|integer" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">层</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="layer" autocomplete="off" class="layui-input">
+                    <input type="number" name="layer" lay-verify="integer" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -254,19 +273,21 @@
             <div class="layui-inline">
                 <label class="layui-form-label">道</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="path" autocomplete="off" class="layui-input">
+                    <input type="number" name="path" lay-verify="integer" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">送丝速度</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="wireFeedSpeed" autocomplete="off" class="layui-input">
+                    <input type="number" name="wireFeedSpeed" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">焊接电压</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="voltage" autocomplete="off" class="layui-input">
+                    <input type="number" name="voltage" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
         </div>
@@ -274,19 +295,21 @@
             <div class="layui-inline">
                 <label class="layui-form-label">焊接电流</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="current" autocomplete="off" class="layui-input">
+                    <input type="number" name="current" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">焊接速度</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="speed" autocomplete="off" class="layui-input">
+                    <input type="number" name="speed" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">摆焊频率</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="frequency" autocomplete="off" class="layui-input">
+                    <input type="number" name="frequency" lay-verify="integer" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -294,19 +317,19 @@
             <div class="layui-inline">
                 <label class="layui-form-label">摆幅</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="amplitude" autocomplete="off" class="layui-input">
+                    <input type="number" name="amplitude" lay-verify="decimal2" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">停留时间(L)</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="waitl" autocomplete="off" class="layui-input">
+                    <input type="number" name="waitl" lay-verify="decimal2" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-inline">
                 <label class="layui-form-label">停留时间(A)</label>
                 <div class="layui-input-inline">
-                    <input type="number" name="waita" autocomplete="off" class="layui-input">
+                    <input type="number" name="waita" lay-verify="decimal2" autocomplete="off" class="layui-input">
                 </div>
             </div>
         </div>
@@ -324,9 +347,13 @@
         <i class="layui-icon">&#xe608;</i> 添加数据
     </button>
 </script>
-<!--    TODO: cyc 绝对路径-->
-<script src="../lib/layui/layui.all.js"></script>
-<!--<script src="/js/common.js"></script>-->
+<script type="text/html" id="welding-operation">
+    <div class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</div>
+    <div class="layui-btn layui-btn-xs" lay-event="edit">编辑</div>
+    <div class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</div>
+</script>
+<script src="/lib/layui/layui.all.js"></script>
+<script src="/js/common.js"></script>
 <script>
     //JavaScript代码区域
     let $ = layui.$;
@@ -336,47 +363,11 @@
     // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
     let weldingFormLayerIdx;
 
-    table.on('toolbar(welding-table)', function (obj) {
-        if (obj.event === 'add-welding') {
-            weldingFormLayerIdx = layer.open({
-                type: 1,
-                title: '新增数据',
-                content: $('#welding-form-wrapper'),
-                area: '880px',
-                end: function () {
-                    $('#welding-form')[0].reset();
-                    form.render();
-                }
-            });
-        }
-    });
-
-    form.on('submit(submit-welding)', function (data) {
-        $.ajax({
-            type: 'POST',
-            url: '/welding',
-            data: data.field,
-            cache: false,
-            success: function (res) {
-                if (res.code === 200) {
-                    layer.msg('新增数据成功。', {icon: 1, time: 1000});
-                    layer.close(weldingFormLayerIdx);
-                } else {
-                    layer.msg('新增数据失败，请重试。', {icon: 5, time: 1000});
-                }
-            },
-            error: function () {
-                layer.msg('新增数据请求出错，请重试。', {icon: 5, time: 1000});
-            }
-        });
-        return false;
-    });
-
     table.render({
+        id: 'welding-table',
         elem: '#welding-table',
         url: '/welding',
         method: 'get',
-        // where: {},
         // headers: {},
         request: {
             pageName: 'pageNum',
@@ -416,8 +407,198 @@
             {field: 'frequency', title: '摆焊频率'},
             {field: 'amplitude', title: '摆幅'},
             {field: 'waitl', title: '停留时间(L)'},
-            {field: 'waita', title: '停留时间(A)'}
+            {field: 'waita', title: '停留时间(A)'},
+            {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#welding-operation'}
         ]]
+    });
+
+    table.on('toolbar(welding-table)', function (obj) {
+        if (obj.event === 'add-welding') {
+            weldingFormLayerIdx = layer.open({
+                type: 1,
+                title: '新增数据',
+                content: $('#welding-form-wrapper'),
+                area: '880px',
+                end: function () {
+                    $('#welding-form')[0].reset();
+                    form.render(null, 'welding-form');
+                }
+            });
+        }
+    });
+
+    table.on('tool(welding-table)', function (obj) {
+        if (obj.event === 'detail') {
+            // welding表单变为只读，且隐藏提交按钮
+            let $weldingForm = $('#welding-form');
+            $weldingForm.find('.form-button-wrapper').hide();
+            $weldingForm.find('input').attr('readonly', 'readonly');
+            layer.open({
+                type: 1,
+                title: '数据详情',
+                content: $('#welding-form-wrapper'),
+                area: '880px',
+                success: function () {
+                    form.val('welding-form', obj.data);
+                },
+                end: function () {
+                    $weldingForm.find('.form-button-wrapper').show();
+                    $weldingForm.find('input').removeAttr('readonly');
+                    $weldingForm[0].reset();
+                    form.render(null, 'welding-form');
+                }
+            });
+        } else if (obj.event === 'edit') {
+            let $weldingForm = $('#welding-form');
+            weldingFormLayerIdx = layer.open({
+                type: 1,
+                title: '编辑数据',
+                content: $('#welding-form-wrapper'),
+                area: '880px',
+                success: function () {
+                    form.val('welding-form', obj.data);
+                    // 将obj绑定到form上，用于更新时使用
+                    $weldingForm.data('table-event-obj', obj);
+                    $weldingForm.find('[lay-submit]').attr('lay-filter', 'submit-edit-welding');
+                },
+                end: function () {
+                    $weldingForm[0].reset();
+                    $weldingForm.find('[lay-submit]').attr('lay-filter', 'submit-welding');
+                    form.render(null, 'welding-form');
+                }
+            });
+        } else if (obj.event === 'del') {
+            layer.confirm('确定删除该条数据吗？', function (index) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/welding',
+                    data: {id: obj.data.id},
+                    cache: false,
+                    success: function (res) {
+                        if (res.code === 200) {
+                            obj.del();
+                            layer.msg('删除数据成功。', {icon: 1, time: 1000});
+                        } else {
+                            layer.msg('删除数据失败，请重试。', {icon: 5, time: 1000});
+                        }
+                        layer.close(index);
+                    },
+                    error: function () {
+                        layer.msg('删除数据请求出错，请重试。', {icon: 5, time: 1000});
+                        layer.close(index);
+                    }
+                });
+            });
+        }
+    });
+
+    form.on('submit(submit-welding)', function (data) {
+        $.ajax({
+            type: 'POST',
+            url: '/welding',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                if (res.code === 200) {
+                    layer.msg('新增数据成功。', {icon: 1, time: 1000});
+                    layer.close(weldingFormLayerIdx);
+                } else {
+                    layer.msg('新增数据失败，请重试。', {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('新增数据请求出错，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+
+    form.on('submit(submit-edit-welding)', function (data) {
+        // 读取绑定在form上的表格事件参数
+        let $weldingForm = $('#welding-form');
+        let tableEventObj = $weldingForm.data('table-event-obj');
+        data.field.id = tableEventObj.data.id;
+        $.ajax({
+            type: 'PUT',
+            url: '/welding',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                if (res.code === 200) {
+                    // 更新表格中的数据
+                    tableEventObj.update(data.field);
+                    $weldingForm.removeData('table-event-obj');
+                    layer.msg('编辑数据成功。', {icon: 1, time: 1000});
+                    layer.close(weldingFormLayerIdx);
+                } else {
+                    layer.msg('编辑数据失败，请重试。', {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('编辑数据请求出错，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+
+    form.on('submit(submit-filter-welding)', function (data) {
+        table.reload('welding-table', {
+            where: data.field,
+            page: {
+                curr: 1
+            }
+        });
+        return false;
+    });
+
+    form.verify({
+        'string40': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            if (value.length > 40) {
+                return fieldName + '不超过40个字符';
+            }
+        },
+        'integer': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            let reg = /^(0|-?[1-9][0-9]*)$/;
+            if (!reg.test(value)) {
+                return fieldName + '必须为整数';
+            }
+            let v = Number.parseInt(value);
+            if (v < -1000000000) {
+                return fieldName + '不能小于-1000000000';
+            }
+            if (v > 1000000000) {
+                return fieldName + '不能大于1000000000';
+            }
+        },
+        'decimal2': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            let integerReg = /^(0|-?[1-9][0-9]*)$/;
+            let decimalReg = /^-?(0|[1-9][0-9]*)\.[0-9]{1,2}$/;
+            if (!integerReg.test(value) && !decimalReg.test(value)) {
+                return fieldName + '必须为数字且小数位不超过两位';
+            }
+            let v = Number.parseFloat(value);
+            if (v < -1000000000) {
+                return fieldName + '不能小于-1000000000';
+            }
+            if (v > 1000000000) {
+                return fieldName + '不能大于1000000000';
+            }
+        }
     });
 
 </script>

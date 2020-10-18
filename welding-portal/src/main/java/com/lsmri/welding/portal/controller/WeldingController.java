@@ -3,6 +3,8 @@ package com.lsmri.welding.portal.controller;
 import com.lsmri.welding.common.api.CommonPage;
 import com.lsmri.welding.common.api.CommonResult;
 import com.lsmri.welding.model.WeldingDO;
+import com.lsmri.welding.portal.dto.AddWeldingQuery;
+import com.lsmri.welding.portal.dto.ListWeldingQuery;
 import com.lsmri.welding.portal.service.WeldingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,17 +28,32 @@ public class WeldingController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult save(WeldingDO weldingDO) {
-        int saveNum = weldingService.save(weldingDO);
+    public CommonResult save(AddWeldingQuery addWeldingQuery) {
+        int saveNum = weldingService.save(addWeldingQuery);
         return saveNum > 0 ? CommonResult.success(null) : CommonResult.failed();
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult list(@RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
+    public CommonResult list(ListWeldingQuery listWeldingQuery,
+                             @RequestParam(name = "pageNum", defaultValue = "1") Integer pageNum,
                              @RequestParam(name = "pageSize", defaultValue = "10") Integer pageSize) {
-        List<WeldingDO> weldingList = weldingService.list(pageNum, pageSize);
+        List<WeldingDO> weldingList = weldingService.list(listWeldingQuery, pageNum, pageSize);
         return CommonResult.success(CommonPage.restPage(weldingList));
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    @ResponseBody
+    public CommonResult update(WeldingDO weldingDO) {
+        int saveNum = weldingService.update(weldingDO);
+        return saveNum > 0 ? CommonResult.success(null) : CommonResult.failed();
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE)
+    @ResponseBody
+    public CommonResult delete(@RequestParam(name = "id") Long id) {
+        int deleteNum = weldingService.delete(id);
+        return deleteNum > 0 ? CommonResult.success(null) : CommonResult.failed();
     }
 
 }
