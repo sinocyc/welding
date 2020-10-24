@@ -1,6 +1,7 @@
 package com.lsmri.welding.common.exception;
 
 import com.lsmri.welding.common.api.CommonResult;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -39,6 +40,12 @@ public class GlobalExceptionHandler {
     public CommonResult handleValidException(BindException e) {
         BindingResult bindingResult = e.getBindingResult();
         return handleBindingResult(bindingResult);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = HttpMessageNotReadableException.class)
+    public CommonResult handleParamException(HttpMessageNotReadableException e) {
+        return CommonResult.validateFailed();
     }
 
     private CommonResult handleBindingResult(BindingResult bindingResult) {

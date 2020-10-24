@@ -7,6 +7,7 @@ import com.lsmri.welding.portal.dto.AddWeldingQuery;
 import com.lsmri.welding.portal.dto.ListWeldingQuery;
 import com.lsmri.welding.portal.service.WeldingService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

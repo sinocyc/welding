@@ -17,3 +17,69 @@ h1 {
     font-weight: bold;
     margin-bottom: 1rem;
 }
+
+.layui-body {
+    bottom: 0 !important;
+    margin: 15px;
+}
+
+.layui-fluid {
+    padding: 0;
+}
+
+#welding-form-wrapper {
+    padding: 15px 15px 0 15px;
+}
+
+#welding-form .form-button-wrapper {
+    text-align: center;
+}
+
+#welding-form .layui-form-label {
+    width: 110px;
+    padding-left: 8px;
+    padding-right: 8px;
+}
+
+#welding-form .layui-input-inline {
+    width: 150px;
+}
+
+#filter-welding-form-wrapper {
+    border: 1px solid #e6e6e6;
+    padding: 5px 5px 0 5px;
+}
+
+#filter-welding-form .layui-form-item {
+    margin-bottom: 0;
+}
+
+#filter-welding-form .layui-inline {
+    line-height: normal;
+}
+
+#filter-welding-form .layui-form-label {
+    width: 100px;
+    height: 32px;
+    line-height: 32px;
+    padding: 0 8px;
+    font-size: 13px;
+}
+
+#filter-welding-form .layui-input-inline {
+    width: 140px;
+}
+
+#filter-welding-form .layui-input {
+    height: 32px;
+}
+
+#filter-welding-form .form-button-wrapper {
+    text-align: center;
+    border-top: 1px solid #e6e6e6;
+    padding-top: 5px;
+}
+
+.layui-body .layui-table-cell {
+    padding: 0 10px;
+}

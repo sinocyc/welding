@@ -1,0 +1,142 @@
+<div id="welding-form-wrapper" style="display: none;">
+    <form id="welding-form" lay-filter="welding-form" class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">母材</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="baseMetal" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊材</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="weldMaterial" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">板厚</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="thickness" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接位置</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="position" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接形式</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="type" lay-verify="required|string40" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊缝宽度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="width" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">根部间隙</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="gap" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">坡口角度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="angle" lay-verify="required|integer" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">层</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="layer" lay-verify="integer" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">道</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="path" lay-verify="integer" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">送丝速度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="wireFeedSpeed" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接电压</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="voltage" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接电流</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="current" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">焊接速度</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="speed" lay-verify="required|decimal2" autocomplete="off"
+                           class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">摆焊频率</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="frequency" lay-verify="integer" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">摆幅</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="amplitude" lay-verify="decimal2" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">停留时间(L)</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="waitl" lay-verify="decimal2" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">停留时间(A)</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="waita" lay-verify="decimal2" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+        <div class="layui-form-item form-button-wrapper">
+            <div class="layui-inline">
+                <button class="layui-btn" lay-submit lay-filter="submit-welding">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
