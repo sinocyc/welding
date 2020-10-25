@@ -1,4 +1,13 @@
-<div class="layui-fluid">
+<div class="layui-card breadcrumb-wrapper">
+    <div class="layui-card-header">
+        <span class="layui-breadcrumb" lay-separator="/">
+            <a><cite>数据</cite></a>
+            <a><cite>数据管理</cite></a>
+        </span>
+    </div>
+</div>
+
+<div class="layui-fluid content-wrapper">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
@@ -72,16 +81,20 @@
         <i class="layui-icon">&#xe608;</i> 添加数据
     </button>
 </script>
-<script type="text/html" id="welding-operation">
+<script type="text/html" id="welding-operation-view">
+    <div class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</div>
+</script>
+<script type="text/html" id="welding-operation-edit">
     <div class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</div>
     <div class="layui-btn layui-btn-xs" lay-event="edit">编辑</div>
     <div class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</div>
 </script>
 
 <script>
-    // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
-    let weldingFormLayerIdx;
-
+    let colToolbarSelector = '#welding-operation-view';
+    if (hasAuthority('edit')) {
+        colToolbarSelector = '#welding-operation-edit';
+    }
     table.render({
         id: 'welding-table',
         elem: '#welding-table',
@@ -103,7 +116,7 @@
                 data: res.data.list
             };
         },
-        toolbar: '#add-welding-btn-toolbar',
+        toolbar: hasAuthority('edit') ? '#add-welding-btn-toolbar' : true,
         page: {
             limits: [10, 20, 50, 100]
         },
@@ -127,9 +140,12 @@
             {field: 'amplitude', title: '摆幅'},
             {field: 'waitl', title: '停留时间(L)'},
             {field: 'waita', title: '停留时间(A)'},
-            {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#welding-operation'}
+            {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: colToolbarSelector}
         ]]
     });
+
+    // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
+    let weldingFormLayerIdx;
 
     table.on('toolbar(welding-table)', function (obj) {
         if (obj.event === 'add-welding') {
@@ -198,7 +214,7 @@
                             obj.del();
                             layer.msg('删除数据成功。', {icon: 1, time: 1000});
                         } else {
-                            layer.msg('删除数据失败，请重试。', {icon: 5, time: 1000});
+                            layer.msg(res.message, {icon: 5, time: 1000});
                         }
                         layer.close(index);
                     },
@@ -222,7 +238,7 @@
                     layer.msg('新增数据成功。', {icon: 1, time: 1000});
                     layer.close(weldingFormLayerIdx);
                 } else {
-                    layer.msg('新增数据失败，请重试。', {icon: 5, time: 1000});
+                    layer.msg(res.message, {icon: 5, time: 1000});
                 }
             },
             error: function () {
@@ -250,7 +266,7 @@
                     layer.msg('编辑数据成功。', {icon: 1, time: 1000});
                     layer.close(weldingFormLayerIdx);
                 } else {
-                    layer.msg('编辑数据失败，请重试。', {icon: 5, time: 1000});
+                    layer.msg(res.message, {icon: 5, time: 1000});
                 }
             },
             error: function () {
@@ -268,56 +284,6 @@
             }
         });
         return false;
-    });
-
-    form.verify({
-        'string40': function (value, item) {
-            if (!value) {
-                // 值为空时不判断，直接通过
-                return false;
-            }
-            let fieldName = $(item).parent().siblings('.layui-form-label').text();
-            if (value.length > 40) {
-                return fieldName + '不超过40个字符';
-            }
-        },
-        'integer': function (value, item) {
-            if (!value) {
-                // 值为空时不判断，直接通过
-                return false;
-            }
-            let fieldName = $(item).parent().siblings('.layui-form-label').text();
-            let reg = /^(0|-?[1-9][0-9]*)$/;
-            if (!reg.test(value)) {
-                return fieldName + '必须为整数';
-            }
-            let v = Number.parseInt(value);
-            if (v < -1000000000) {
-                return fieldName + '不能小于-1000000000';
-            }
-            if (v > 1000000000) {
-                return fieldName + '不能大于1000000000';
-            }
-        },
-        'decimal2': function (value, item) {
-            if (!value) {
-                // 值为空时不判断，直接通过
-                return false;
-            }
-            let fieldName = $(item).parent().siblings('.layui-form-label').text();
-            let integerReg = /^(0|-?[1-9][0-9]*)$/;
-            let decimalReg = /^-?(0|[1-9][0-9]*)\.[0-9]{1,2}$/;
-            if (!integerReg.test(value) && !decimalReg.test(value)) {
-                return fieldName + '必须为数字且小数位不超过两位';
-            }
-            let v = Number.parseFloat(value);
-            if (v < -1000000000) {
-                return fieldName + '不能小于-1000000000';
-            }
-            if (v > 1000000000) {
-                return fieldName + '不能大于1000000000';
-            }
-        }
     });
 
 </script>

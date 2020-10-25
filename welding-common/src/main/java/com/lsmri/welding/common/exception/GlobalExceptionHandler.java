@@ -6,6 +6,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -42,12 +43,6 @@ public class GlobalExceptionHandler {
         return handleBindingResult(bindingResult);
     }
 
-    @ResponseBody
-    @ExceptionHandler(value = HttpMessageNotReadableException.class)
-    public CommonResult handleParamException(HttpMessageNotReadableException e) {
-        return CommonResult.validateFailed();
-    }
-
     private CommonResult handleBindingResult(BindingResult bindingResult) {
         String message = null;
         if (bindingResult.hasErrors()) {
@@ -57,6 +52,13 @@ public class GlobalExceptionHandler {
             }
         }
         return CommonResult.validateFailed(message);
+    }
+
+    @ResponseBody
+    @ExceptionHandler(value = {HttpMessageNotReadableException.class,
+            MissingServletRequestParameterException.class})
+    public CommonResult handleParamException(Exception e) {
+        return CommonResult.validateFailed();
     }
 
 }

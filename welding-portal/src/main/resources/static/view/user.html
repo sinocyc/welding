@@ -1,1 +1,158 @@
-<h1>用户管理</h1>
+<div class="layui-card breadcrumb-wrapper">
+    <div class="layui-card-header">
+        <span class="layui-breadcrumb" lay-separator="/">
+            <a><cite>用户</cite></a>
+            <a><cite>用户管理</cite></a>
+        </span>
+    </div>
+</div>
+
+<div class="layui-fluid content-wrapper">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <table id="user-table" lay-filter="user-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="add-user-btn-toolbar">
+    <button type="button" lay-event="add-user" class="layui-btn layui-btn-sm">
+        <i class="layui-icon">&#xe608;</i> 添加用户
+    </button>
+</script>
+
+<script type="text/html" id="user-operation">
+    <div class="layui-btn layui-btn-xs" lay-event="reset-password">重置密码</div>
+    <div class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</div>
+</script>
+
+<script>
+    table.render({
+        id: 'user-table',
+        elem: '#user-table',
+        url: '/user',
+        method: 'get',
+        // headers: {},
+        request: {
+            pageName: 'pageNum',
+            limitName: 'pageSize'
+        },
+        response: {
+            statusCode: 1,
+        },
+        parseData: function (res) {
+            return {
+                code: res.code,
+                msg: res.message,
+                count: res.data.total,
+                data: res.data.list
+            };
+        },
+        toolbar: '#add-user-btn-toolbar',
+        page: {
+            limits: [10, 20, 50, 100]
+        },
+        cellMinWidth: 100,
+        cols: [[
+            {field: 'id', title: 'ID'},
+            {field: 'username', title: '用户名'},
+            {
+                field: 'status', title: '状态', templet: function (d) {
+                    return d.status === 1 ? '正常' : '不可用';
+                }
+            },
+            {field: 'roles', title: '角色'},
+            {fixed: 'right', title: '操作', width: 160, align: 'center', toolbar: '#user-operation'}
+        ]]
+    });
+
+    // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
+    let userFormLayerIdx;
+
+    table.on('toolbar(user-table)', function (obj) {
+        if (obj.event === 'add-user') {
+            userFormLayerIdx = layer.open({
+                type: 1,
+                title: '新增用户',
+                content: $('#user-form-wrapper'),
+                area: '400px',
+                end: function () {
+                    $('#user-form')[0].reset();
+                    form.render(null, 'user-form');
+                }
+            });
+        }
+    });
+
+    table.on('tool(user-table)', function (obj) {
+        if (obj.event === 'reset-password') {
+            layer.confirm('确定重置该用户的密码吗？', function (index) {
+                $.ajax({
+                    type: 'PUT',
+                    url: '/user/reset',
+                    data: {username: obj.data.username},
+                    cache: false,
+                    success: function (res) {
+                        if (res.code === 1) {
+                            layer.msg('重置用户密码成功，新密码 ' + res.data, {icon: 1, time: 1000});
+                        } else {
+                            layer.msg(res.message, {icon: 5, time: 1000});
+                        }
+                        layer.close(index);
+                    },
+                    error: function () {
+                        layer.msg('重置密码请求出错，请重试。', {icon: 5, time: 1000});
+                        layer.close(index);
+                    }
+                });
+            });
+        } else if (obj.event === 'del') {
+            layer.confirm('确定删除该用户吗？', function (index) {
+                $.ajax({
+                    type: 'DELETE',
+                    url: '/user',
+                    data: {username: obj.data.username},
+                    cache: false,
+                    success: function (res) {
+                        if (res.code === 1) {
+                            obj.del();
+                            layer.msg('删除用户成功。', {icon: 1, time: 1000});
+                        } else {
+                            layer.msg(res.message, {icon: 5, time: 1000});
+                        }
+                        layer.close(index);
+                    },
+                    error: function () {
+                        layer.msg('删除数据请求出错，请重试。', {icon: 5, time: 1000});
+                        layer.close(index);
+                    }
+                });
+            });
+        }
+    });
+
+    form.on('submit(submit-user)', function (data) {
+        $.ajax({
+            type: 'POST',
+            url: '/user',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                if (res.code === 1) {
+                    layer.msg('新增用户成功。', {icon: 1, time: 1000});
+                    layer.close(userFormLayerIdx);
+                } else {
+                    layer.msg(res.message, {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('新增用户请求出错，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+</script>

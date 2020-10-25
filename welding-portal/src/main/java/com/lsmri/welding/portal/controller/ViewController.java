@@ -2,9 +2,10 @@ package com.lsmri.welding.portal.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
+ * 页面控制器
+ *
  * @author Cui Yicheng
  * @date 2020-09-23
  */

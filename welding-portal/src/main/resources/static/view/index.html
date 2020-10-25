@@ -12,14 +12,15 @@
     <div class="layui-header">
         <div class="layui-logo">Welding</div>
         <!-- 头部区域（可配合layui已有的水平导航） -->
-        <ul class="layui-nav layui-layout-left">
-            <li class="layui-nav-item" lay-unselect>
-                <a href="javascript:;">
+        <ul class="layui-nav layui-layout-left" lay-filter="header-left-nav">
+            <!-- 收缩侧边菜单，暂未实现 -->
+            <!--<li class="layui-nav-item" lay-unselect>
+                <a href="javascript:;" nav-event="shrink">
                     <i class="layui-icon layui-icon-shrink-right"></i>
                 </a>
-            </li>
+            </li>-->
             <li class="layui-nav-item" lay-unselect>
-                <a href="javascript:;">
+                <a href="javascript:;" nav-event="refresh">
                     <i class="layui-icon layui-icon-refresh-3"></i>
                 </a>
             </li>
@@ -35,25 +36,26 @@
                     <dd><a href="javascript:;" nav-event="logout" href="">退出</a></dd>
                 </dl>
             </li>
-<!--            <li class="layui-nav-item"><a href="">退出</a></li>-->
         </ul>
     </div>
 
     <div class="layui-side layui-bg-black">
         <div class="layui-side-scroll">
             <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
-            <ul id="slide-menu" class="layui-nav layui-nav-tree" lay-filter="side-menu">
+            <ul id="side-menu" class="layui-nav layui-nav-tree" lay-filter="side-menu">
                 <li class="layui-nav-item layui-nav-itemed">
                     <a class="" href="javascript:;">数据</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" class="default-content" data-content-href="welding" data-form-href="welding-form">数据管理</a></dd>
+                        <dd><a href="javascript:;" class="side-nav-btn default-content" data-content-href="welding"
+                               data-form-href="welding-form">数据管理</a></dd>
                     </dl>
                 </li>
-                <li class="layui-nav-item">
+                <li class="layui-nav-item layui-nav-itemed authority-admin" style="display: none;">
                     <a href="javascript:;">用户</a>
                     <dl class="layui-nav-child">
-                        <dd><a href="javascript:;" data-content-href="user">用户管理</a></dd>
-                        <dd><a href="javascript:;" data-content-href="role">角色管理</a></dd>
+                        <dd><a href="javascript:;" class="side-nav-btn" data-content-href="user"
+                               data-form-href="user-form">用户管理</a></dd>
+                        <dd><a href="javascript:;" class="side-nav-btn" data-content-href="role">角色管理</a></dd>
                     </dl>
                 </li>
             </ul>
@@ -61,6 +63,33 @@
     </div>
 
     <div class="layui-body"></div>
+</div>
+
+<div id="change-password-form-wrapper" style="display: none;">
+    <form id="change-password-form" lay-filter="change-password-form" class="layui-form layui-form-pane" action="">
+        <div class="layui-form-item">
+            <label class="layui-form-label required-field">旧密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="oldPassword" lay-verify="required|string40" placeholder="请输入旧密码"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label required-field">新密码</label>
+            <div class="layui-input-block">
+                <input type="password" name="newPassword" lay-verify="required|string40" placeholder="请输入新密码"
+                       autocomplete="off"
+                       class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="submit-change-password">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
 </div>
 
 <script src="/lib/layui/layui.all.js"></script>
@@ -79,6 +108,21 @@
         sessionStorage.removeItem('user');
         location.href = '/view/login.html';
     }
+
+    function getUser() {
+        return JSON.parse(sessionStorage.getItem('user'));
+    }
+
+    function getUsername() {
+        let user = getUser();
+        return user.username;
+    }
+
+    function hasAuthority(authority) {
+        let user = getUser();
+        return user.authorities && user.authorities.indexOf(authority) !== -1;
+    }
+
     // 拦截 ajax 请求，加 token 请求头，验证登录
     ah.proxy({
         //请求发起前进入
@@ -106,6 +150,10 @@
                     return;
                 }
             }
+            if (response.status === 403) {
+                layer.msg('没有相关权限。', {icon: 5, time: 1000});
+                return;
+            }
             handler.next(response);
         }
     });
@@ -128,6 +176,10 @@
                     sessionStorage.setItem('user', JSON.stringify(user));
                     // 更新页面上的用户信息
                     $('#user-name').text(user.username);
+                    // 是否显示管理员菜单
+                    if (hasAuthority('admin')) {
+                        $('.authority-admin').show();
+                    }
                 } else {
                     goLogin();
                 }
@@ -138,6 +190,7 @@
             }
         });
     }
+
     // 侧边导航按钮
     element.on('nav(side-menu)', function (elem) {
         let $elem = $(elem);
@@ -154,6 +207,8 @@
                 dataType: 'html',
                 success: function (res) {
                     $('.layui-body').html(res);
+                    // 渲染动态增加的面包屑
+                    element.render('breadcrumb');
                     // 移除旧页面的表单
                     $oldForm.remove();
                 },
@@ -181,12 +236,107 @@
         }
     });
     // 默认加载 welding 页
-    $('#slide-menu').find('.default-content').trigger('click');
+    $('#side-menu').find('.default-content').trigger('click');
+
+    element.on('nav(header-left-nav)', function (elem) {
+        let event = $(elem).attr('nav-event');
+        if (event === 'refresh') {
+            // 刷新内容
+            $('#side-menu .layui-this').find('.side-nav-btn').trigger('click');
+        }
+    });
+
+    // 新增表单弹出层的索引，用于在表单提交时关闭弹出层
+    let passwordFormLayerIdx;
 
     element.on('nav(header-right-nav)', function (elem) {
         let event = $(elem).attr('nav-event');
-        if (event === 'logout') {
+        if (event === 'change-password') {
+            passwordFormLayerIdx = layer.open({
+                type: 1,
+                title: '修改密码',
+                content: $('#change-password-form-wrapper'),
+                area: '400px',
+                end: function () {
+                    $('#change-password-form')[0].reset();
+                    form.render(null, 'change-password-form');
+                }
+            });
+        } else if (event === 'logout') {
             goLogin();
+        }
+    });
+
+    form.on('submit(submit-change-password)', function (data) {
+        data.field.username = getUsername();
+        $.ajax({
+            type: 'PUT',
+            url: '/user/password',
+            data: data.field,
+            cache: false,
+            success: function (res) {
+                if (res.code === 1) {
+                    layer.msg('修改密码成功。', {icon: 1, time: 1000});
+                    layer.close(passwordFormLayerIdx);
+                } else {
+                    layer.msg(res.message, {icon: 5, time: 1000});
+                }
+            },
+            error: function () {
+                layer.msg('修改密码请求出错，请重试。', {icon: 5, time: 1000});
+            }
+        });
+        return false;
+    });
+
+    // 表单验证规则
+    form.verify({
+        'string40': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            if (value.length > 40) {
+                return fieldName + '不超过40个字符';
+            }
+        },
+        'integer': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            let reg = /^(0|-?[1-9][0-9]*)$/;
+            if (!reg.test(value)) {
+                return fieldName + '必须为整数';
+            }
+            let v = Number.parseInt(value);
+            if (v < -1000000000) {
+                return fieldName + '不能小于-1000000000';
+            }
+            if (v > 1000000000) {
+                return fieldName + '不能大于1000000000';
+            }
+        },
+        'decimal2': function (value, item) {
+            if (!value) {
+                // 值为空时不判断，直接通过
+                return false;
+            }
+            let fieldName = $(item).parent().siblings('.layui-form-label').text();
+            let integerReg = /^(0|-?[1-9][0-9]*)$/;
+            let decimalReg = /^-?(0|[1-9][0-9]*)\.[0-9]{1,2}$/;
+            if (!integerReg.test(value) && !decimalReg.test(value)) {
+                return fieldName + '必须为数字且小数位不超过两位';
+            }
+            let v = Number.parseFloat(value);
+            if (v < -1000000000) {
+                return fieldName + '不能小于-1000000000';
+            }
+            if (v > 1000000000) {
+                return fieldName + '不能大于1000000000';
+            }
         }
     });
 </script>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lsmri.welding.portal.dao.RoleDao">
+    <select id="listRoleWithPermissions" resultMap="roleWithPermission">
+        SELECT rp.role_id, p.description
+        FROM role_permission_relation AS rp
+        LEFT JOIN permission AS p
+        ON rp.permission_id = p.id
+        WHERE rp.role_id
+        IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap id="roleWithPermission" type="com.lsmri.welding.portal.dto.RolePermissionDTO">
+        <id property="id" column="role_id"/>
+        <collection property="permissions" ofType="string">
+            <result column="description"/>
+        </collection>
+    </resultMap>
+</mapper>

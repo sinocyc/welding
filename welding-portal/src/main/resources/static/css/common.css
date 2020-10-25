@@ -20,11 +20,28 @@ h1 {
 
 .layui-body {
     bottom: 0 !important;
-    margin: 15px;
 }
 
-.layui-fluid {
-    padding: 0;
+.layui-body .layui-table-cell {
+    padding: 0 10px;
+}
+
+.layui-form-label.required-field:after {
+    content: " *";
+    color: red;
+    position: absolute;
+}
+
+.breadcrumb-wrapper {
+    margin-bottom: 0;
+}
+
+.breadcrumb-wrapper .layui-breadcrumb {
+    visibility: visible;
+}
+
+.content-wrapper {
+    padding: 15px;
 }
 
 #welding-form-wrapper {
@@ -80,6 +97,10 @@ h1 {
     padding-top: 5px;
 }
 
-.layui-body .layui-table-cell {
-    padding: 0 10px;
+#user-form-wrapper {
+    padding: 15px 15px 0 15px;
+}
+
+#change-password-form-wrapper {
+    padding: 15px 15px 0 15px;
 }

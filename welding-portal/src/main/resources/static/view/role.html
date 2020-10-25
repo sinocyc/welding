@@ -1,1 +1,54 @@
-<h1>角色</h1>
+<div class="layui-card breadcrumb-wrapper">
+    <div class="layui-card-header">
+        <span class="layui-breadcrumb" lay-separator="/">
+            <a><cite>用户</cite></a>
+            <a><cite>角色管理</cite></a>
+        </span>
+    </div>
+</div>
+
+<div class="layui-fluid content-wrapper">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-body">
+                    <table id="role-table" lay-filter="role-table"></table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    table.render({
+        id: 'role-table',
+        elem: '#role-table',
+        url: '/role',
+        method: 'get',
+        // headers: {},
+        request: {
+            pageName: 'pageNum',
+            limitName: 'pageSize'
+        },
+        response: {
+            statusCode: 1,
+        },
+        parseData: function (res) {
+            return {
+                code: res.code,
+                msg: res.message,
+                count: res.data.total,
+                data: res.data.list
+            };
+        },
+        page: {
+            limits: [10, 20, 50, 100]
+        },
+        cellMinWidth: 100,
+        cols: [[
+            {field: 'id', title: 'ID'},
+            {field: 'description', title: '角色'},
+            {field: 'permissions', title: '权限'}
+        ]]
+    });
+</script>

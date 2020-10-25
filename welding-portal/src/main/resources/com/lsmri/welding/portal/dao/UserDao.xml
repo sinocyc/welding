@@ -14,4 +14,23 @@
         ON rp.permission_id = p.id
         WHERE ur.id = #{userId}
     </select>
+
+    <select id="listUserWithRoles" resultMap="userWithRole">
+        SELECT ur.user_id, r.description
+        FROM user_role_relation AS ur
+        LEFT JOIN role AS r
+        ON ur.role_id = r.id
+        WHERE ur.user_id
+        IN
+        <foreach collection="list" item="id" index="index" open="(" close=")" separator=",">
+            #{id}
+        </foreach>
+    </select>
+
+    <resultMap id="userWithRole" type="com.lsmri.welding.portal.dto.UserRoleDTO">
+        <id property="id" column="user_id"/>
+        <collection property="roles" ofType="string">
+            <result column="description"/>
+        </collection>
+    </resultMap>
 </mapper>

@@ -6,13 +6,17 @@ import java.util.List;
 
 /**
  * @author Cui Yicheng
- * @date 2020-10-24
+ * @date 2020-10-25
  */
 @Data
-public class UserInfoDTO {
+public class UserRoleDTO {
+
+    private Long id;
 
     private String username;
 
-    private List<String> authorities;
+    private Integer status;
+
+    private List<String> roles;
 
 }
